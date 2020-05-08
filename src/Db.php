@@ -12,7 +12,7 @@ class Db
 	 * Dane dostępowe do bazy.
 	 */
 	private $dbLogin = 'root';
-	private $dbPassword = 'fckgwrhqq2';
+	private $dbPassword = '';
 	private $dbHost = 'localhost';
 	private $dbName = 'ibd';
 

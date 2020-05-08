@@ -13,7 +13,7 @@ include 'header.php';
 use Ibd\Ksiazki;
 
 $ksiazki = new Ksiazki();
-$dane = $ksiazki->pobierz($id);
+$dane = $ksiazki->pobierz($id)
 ?>
 
     <h2><?= $dane['tytul'] ?></h2>
@@ -21,25 +21,16 @@ $dane = $ksiazki->pobierz($id);
     <p>
         <a href="ksiazki.lista.php"><i class="fas fa-chevron-left"></i> Powrót</a>
     </p>
-
-    <div>
-        <div class="card flex-md-row mb-4 box-shadow h-md-250">
-            <div class="card-body d-flex flex-column align-items-start">
-                <strong class="d-inline-block mb-2 text-primary"><?=$dane['tytul']?></strong>
-                <div class="mb-1 text-muted">ISBN: <?=$dane['isbn']?></div>
-                <h6 class="mb-0">
-                    Cena: <?=$dane['cena']?> PLN</br>
-                    Liczba Stron: <?=$dane['liczba_stron']?>
-                </h6>
-                <p></p>
-                <p class="card-text mb-auto"><?=$dane['opis']?></p>
-            </div>
-            <?php if(!empty($dane['zdjecie'])): ?>
-                <img class="card-img-right flex-auto d-none d-md-block" style="width: 300px; height: 450px;" src="zdjecia/<?=$dane['zdjecie']?>" alt="<?=$dane['tytul']?>" />
-            <?php else: ?>
-                <img class="card-img-right flex-auto d-none d-md-block" style="width: 300px; height: 450px;" src="zdjecia/noimage.jpg" alt="Brak Obrazka" />
-            <?php endif; ?>
-           </div>
-    </div>
+    <?php if (!empty($dane['zdjecie'])): ?>
+        <img style="width: 30%" src="zdjecia/<?= $dane['zdjecie'] ?>" alt="<?= $dane['tytul'] ?>" class="img-thumbnail"/></br>
+    <?php else: ?>
+        brak zdjęcia</br>
+    <?php endif; ?>
+    </br>
+    <p> ISBN : <?= $dane['isbn'] ?></p>
+    <p> Liczba stron : <?= $dane['liczba_stron'] ?></p>
+    <p> Cena : <strong><?= $dane['cena'] ?>zł</strong></p>
+    <p> Opis : <?= $dane['opis'] ?></p>
+    
 
 <?php include 'footer.php'; ?>

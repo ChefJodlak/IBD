@@ -3,6 +3,7 @@ require_once 'vendor/autoload.php';
 session_start();
 
 use Ibd\Koszyk;
+use Ibd\Ksiazki;
 
 $koszyk = new Koszyk();
 
@@ -12,6 +13,10 @@ if(isset($_POST['zmien'])) {
 }
 
 $listaKsiazek = $koszyk->pobierzWszystkie();
+$cenaWszystkich = 0;
+foreach($listaKsiazek as $wynik) {
+	$cenaWszystkich += $wynik['liczba_sztuk']*$wynik['cena'];
+} 
 
 include 'header.php';
 ?>
@@ -55,7 +60,7 @@ include 'header.php';
 						</td>
 						<td><?= $ks['cena'] * $ks['liczba_sztuk'] ?></td>
 						<td style="white-space: nowrap">
-							<a href="koszyk.usun.php" title="usuń z koszyka">
+							<a href="koszyk.usun.php" title="usuń z koszyka" data-id="<?=$ks['id_koszyka'] ?>" class="aUsunZKoszyka">
                                 <i class="fas fa-trash"></i>
 							</a>
 							<a href="ksiazki.szczegoly.php?id=<?=$ks['id']?>" title="szczegóły">
@@ -65,6 +70,7 @@ include 'header.php';
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
+			<tr><td colspan="8" style="text-align: center">Cena wszystkich książek : <b><?php echo $cenaWszystkich ?> zł</b></td></tr>
 			<tfoot>
 				<tr>
 					<td colspan="5">&nbsp;</td>

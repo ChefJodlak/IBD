@@ -65,6 +65,26 @@ class Koszyk
 	}
 
 	/**
+	 * Zwieksz ilosc ksiazki w koszyku o jeden.
+	 *
+	 * @param int $idKsiazki
+	 * @param string $idSesji
+	 * @return bool
+	 */
+	public function zwiekszIloscKsiazek($idKsiazki, $idSesji)
+	{
+		$sql = "SELECT * FROM koszyk WHERE id_sesji = '$idSesji' AND id_ksiazki = :id_ksiazki";
+		$wynik = $this->db->pobierzWszystko($sql, [':id_ksiazki' => $idKsiazki]);
+		foreach($wynik as $koszyk) {
+			$this->zmienLiczbeSztuk([
+				$koszyk['id'] => $koszyk['liczba_sztuk']+1
+			]);
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * Zmienia (usuwa) ilości sztuk książek w koszyku.
 	 *
 	 * @param array $dane Tablica z danymi (klucz to id rekordu w koszyku, wartość to liczba sztuk)

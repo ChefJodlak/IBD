@@ -15,3 +15,19 @@ $(function() {
 		return false;
 	});
 });
+
+$(function() {
+	$(".aUsunZKoszyka").click(function() {
+		const $a = $(this);
+		console.log($a.data('id'));
+		$.post($a.attr('href'), { id_koszyka: $a.data('id') }, function(resp) {
+			if(resp == 'ok') {
+				location.reload();
+			} else {
+				alert('Wystąpił błąd: ' + resp);
+			}
+		});
+		
+		return false;
+	});
+});

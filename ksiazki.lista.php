@@ -11,12 +11,12 @@ $listaKategorii = $kategorie->pobierzWszystkie();
 
 // pobieranie książek
 $ksiazki = new Ksiazki();
-
 $zapytanie = $ksiazki->pobierzZapytanie($_GET);
+
 // dodawanie warunków stronicowania i generowanie linków do stron
 $stronicowanie = new Stronicowanie($_GET, $zapytanie['parametry']);
 $linki = $stronicowanie->pobierzLinki($zapytanie['sql'], 'ksiazki.lista.php');
-$infoRekordy = $stronicowanie->pobierzInfoOLiczbieRekordow($zapytanie['sql'], isset($_GET['strona']) ? $_GET['strona'] : 0);
+$infoRekordy = $stronicowanie->pobierzInfoOLiczbieRekordow($zapytanie['sql']);
 $select = $stronicowanie->dodajLimit($zapytanie['sql']);
 $lista = $ksiazki->pobierzStrone($select, $zapytanie['parametry']);
 ?>
@@ -31,7 +31,8 @@ $lista = $ksiazki->pobierzStrone($select, $zapytanie['parametry']);
             <option value="">kategoria</option>
 
             <?php foreach ($listaKategorii as $kat): ?>
-                <option value="<?= $kat['id'] ?>"
+                <option
+                        value="<?= $kat['id'] ?>"
                     <?= ($_GET['id_kategorii'] ?? '') == $kat['id'] ? 'selected' : '' ?>
                 ><?= $kat['nazwa'] ?></option>
             <?php endforeach; ?>
@@ -90,10 +91,10 @@ $lista = $ksiazki->pobierzStrone($select, $zapytanie['parametry']);
                     <?php endif; ?>
                 </td>
                 <td><?= $ks['tytul'] ?></td>
-		<td><?= $ks['imie_autora'] ?> <?= $ks['nazwisko_autora'] ?></td>
-		<td><?= $ks['nazwa_kategorii'] ?></td>
-		<td><?= $ks['cena'] ?></td>
-		<td>
+                <td><?= $ks['imie_autora'] ?> <?= $ks['nazwisko_autora'] ?></td>
+                <td><?= $ks['nazwa_kategorii'] ?></td>
+                <td><?= $ks['cena'] ?></td>
+                <td>
                     <a href="koszyk.dodaj.php" data-id="<?=$ks['id'] ?>" class="aDodajDoKoszyka" title="dodaj do koszyka"><i class="fas fa-cart-plus"></i></a>
                     <a href="ksiazki.szczegoly.php?id=<?= $ks['id'] ?>" title="szczegóły"><i
                                 class="fas fa-folder-open"></i></a>
