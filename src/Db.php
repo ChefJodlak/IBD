@@ -11,10 +11,10 @@ class Db
 	/**
 	 * Dane dostępowe do bazy.
 	 */
-	private $dbLogin = 'root';
-	private $dbPassword = '';
+	private $dbLogin = 'ibd';
+	private $dbPassword = 'ibdtest';
 	private $dbHost = 'localhost';
-	private $dbName = 'ibd';
+    private $dbName = 'ibd';
 
 	/**
 	 * @var \PDO
@@ -139,6 +139,20 @@ class Db
         $stmt = $this->pdo->prepare($sql);
 
         $params['id'] = $id;
+        return $stmt->execute($params);
+	}
+	
+	/**
+     * Wykonuje podane zapytanie SQL z parametrami.
+     *
+     * @param       $sql
+     * @param array $params
+     * @return bool
+     */
+    public function wykonaj($sql, $params = [])
+    {
+        $stmt = $this->pdo->prepare($sql);
+
         return $stmt->execute($params);
     }
 }

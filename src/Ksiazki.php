@@ -23,9 +23,7 @@ class Ksiazki
      */
     public function pobierzWszystkie()
     {
-        $sql = "SELECT k.*, a.imie as imie_autora, a.nazwisko as nazwisko_autora, kat.nazwa as nazwa_kategorii FROM ksiazki k 
-        JOIN autorzy a ON k.id_autora = a.id
-        JOIN kategorie kat on k.id_kategorii = kat.id";
+        $sql = "SELECT k.*, a.*, k2.* FROM ksiazki k JOIN autorzy as a ON k.id_autora = a.id JOIN kategorie k2 on k.id_kategorii = k2.id; ";
 
         return $this->db->pobierzWszystko($sql);
     }
@@ -36,6 +34,7 @@ class Ksiazki
      * @param $params
      * @return array
      */
+    
     public function pobierzZapytanie($params)
     {
         $parametry = [];
@@ -57,7 +56,7 @@ class Ksiazki
         if (!empty($params['sortowanie'])) {
             $kolumny = ['k.tytul', 'k.cena', 'a.nazwisko'];
             $kierunki = ['ASC', 'DESC'];
-            [$kolumna, $kierunek] = explode(' ', $params['sortowanie']);
+            [$kolumna, $kierunek] == explode(' ', $params['sortowanie']);
 
             if (in_array($kolumna, $kolumny) && in_array($kierunek, $kierunki)) {
                 $sql .= " ORDER BY " . $params['sortowanie'];
@@ -95,9 +94,9 @@ class Ksiazki
      */
     public function pobierzBestsellery()
     {
-        $sql = "SELECT k.id, k.tytul as tytul, k.zdjecie as zdjecie, a.imie as imie_autora, a.nazwisko as nazwisko_autora FROM ksiazki k 
-        LEFT JOIN autorzy a ON k.id_autora = a.id ORDER BY RAND() LIMIT 5";
-
-        return $this->db->pobierzWszystko($sql);
+        
+	$sql = "SELECT k.id, k.tytul, a.imie, a.nazwisko, k.opis, k.isbn, k.cena, k.liczba_stron, k.zdjecie FROM ksiazki k, autorzy a JOIN autorzy WHERE k.id_autora=a.id ORDER BY RAND() LIMIT 5";
+	return $this->db->pobierzWszystko($sql);
+        // uzupełnić funkcję
     }
 }

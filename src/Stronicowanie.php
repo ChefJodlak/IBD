@@ -92,7 +92,7 @@ class Stronicowanie
                 );
             }
         }
-        if($liczbaStron != 0) {
+	if($liczbaStron != 0) {
             $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=%d'><i class='fas fa-angle-right ml-2 mt-2'></i></a></li>",$plik,$parametry,min($liczbaStron-1,$this->strona+1));
             $linki .= sprintf("<li class'page-item'><a href='%s?%s&strona=%d'><i class='fas fa-angle-double-right ml-2 mt-2'></i></a></li>",$plik,$parametry,$liczbaStron-1);
         }
@@ -108,7 +108,7 @@ class Stronicowanie
      * @param string $select Zapytanie SELECT
      * @return string
      */
-    public function pobierzInfoOLiczbieRekordow(string $select): string
+    public function pobierzInfoOLiczbieRekordow(string $select, string $strona): string
     {
         $rekordow = $this->db->policzRekordy($select, $this->parametryZapytania);
         if($rekordow == 0) {

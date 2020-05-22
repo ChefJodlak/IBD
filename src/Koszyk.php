@@ -99,4 +99,15 @@ class Koszyk
 		}
 	}
 
+	 /**
+     * Czyści koszyk.
+     *
+     * @param string $idSesji
+     * @return bool
+     */
+    public function wyczysc($idSesji)
+    {
+        return $this->db->wykonaj("DELETE FROM koszyk WHERE id_sesji = :id_sesji", ['id_sesji' => $idSesji]);
+    }
+
 }
